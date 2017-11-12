@@ -1,12 +1,14 @@
 import numpy as np
 
+# Extremely simple implementation of a perceptron
+# to be improved
 class Perceptron:
 
-
+    # Construct and train the perceptron
+    # trainX should be m x n numpy array of training data
+    # m = number of examples, n = number of features per example
+    # trainy should b m x 1 array of training classes (0 or 1)
     def __init__(self, trainX, trainy):
-        # trainX should be m x n numpy array of training data
-        # m = number of examples, n = number of features per example
-        # trainy should b m x 1 array of training classes (0 or 1)
 
         xshape = trainX.shape
         yshape = trainy.shape
@@ -14,10 +16,11 @@ class Perceptron:
         if len(xshape) != 2:
             error("trainX must be a 2 dimensional array")
 
-        # etc...
-
         m = xshape[0]
         n = xshape[1]
+
+        if yshape[0] != m:
+            error("trainy must contain same number of values as examples in trainX")
 
         constant = np.ones(m).reshape((m,1))
 
@@ -64,6 +67,11 @@ class Perceptron:
                 training = False
                 self.weights = bestWeights
 
+    # Predict using the trained preceptron
+    # data must be an m x n numpy array
+    # with m examples to predict and n features
+    # which must match the number of features
+    # this was trained with
     def predict(self, data):
 
         dshape = data.shape
