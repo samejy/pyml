@@ -1,8 +1,11 @@
 import numpy as np
+import pyml.data_utils as du
 
 # Extremely simple implementation of a perceptron
 # to be improved
 class Perceptron:
+
+    weights = []
 
     # Construct and train the perceptron
     # trainX should be m x n numpy array of training data
@@ -10,21 +13,9 @@ class Perceptron:
     # trainy should b m x 1 array of training classes (0 or 1)
     def __init__(self, trainX, trainy):
 
-        xshape = trainX.shape
-        yshape = trainy.shape
+        (m,n) = du.validate_inputs(trainX, trainy)
 
-        if len(xshape) != 2:
-            error("trainX must be a 2 dimensional array")
-
-        m = xshape[0]
-        n = xshape[1]
-
-        if yshape[0] != m:
-            error("trainy must contain same number of values as examples in trainX")
-
-        constant = np.ones(m).reshape((m,1))
-
-        trainX2 = np.append(constant, trainX, 1)
+        trainX2 = du.prepend_constant_feature_value(trainX, m, 1)
 
         weights = np.zeros(n + 1)
         bestWeights = weights
@@ -79,7 +70,7 @@ class Perceptron:
         m = dshape[0]
         n = dshape[1]
 
-        data2 = np.append(np.ones(m).reshape((m,1)), data, 1)
+        data2 = du.prepend_constant_feature_value(data, m, 1)
 
         res = np.dot(data2, self.weights)
 
