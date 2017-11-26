@@ -11,7 +11,7 @@ class Perceptron:
     # trainX should be m x n numpy array of training data
     # m = number of examples, n = number of features per example
     # trainy should b m x 1 array of training classes (0 or 1)
-    def __init__(self, trainX, trainy):
+    def __init__(self, trainX, trainy, failed_attempts_limit = 20):
 
         (m,n) = du.validate_inputs(trainX, trainy)
 
@@ -54,7 +54,7 @@ class Perceptron:
                 bestErr = err
                 countSinceLastImprovement = 0
 
-            if countSinceLastImprovement > 20:
+            if countSinceLastImprovement > failed_attempts_limit:
                 training = False
                 self.weights = bestWeights
 
